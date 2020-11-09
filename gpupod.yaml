@@ -4,8 +4,17 @@ kind: Pod
 metadata:
   name: gpupod-shuuji3
 spec:
-  nodeSelector:
-    gpu-type: titan-xp
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - preference:
+            matchExpressions:
+              - key: gpu-type
+                operator: In
+                values:
+                  - 2080Ti
+                  - V100
+          weight: 1
   containers:
     - name: mypod
       image: nvidia/cuda:10.0-runtime-centos7
