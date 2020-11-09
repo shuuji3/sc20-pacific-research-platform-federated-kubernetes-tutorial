@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-shuuji3
+  labels:
+    k8s-app: http-shuuji3
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      k8s-app: http-shuuji3
+  template:
+    metadata:
+      labels:
+        k8s-app: http-shuuji3
+    spec:
+      initContainers:
+        - name: myinit
+          image: busybox
+          command: ["sh", "-c", "echo '<html><body><h1>I am ' `hostname` '</h1></body></html>' > /usr/local/apache2/htdocs/index.html"]
+          volumeMounts:
+            - name: dataroot
+              mountPath: /usr/local/apache2/htdocs
+      containers:
+        - name: mypod
+          image: httpd:alpine
+          resources:
+            limits:
+              memory: 1.5Gi
+              cpu: 1
+            requests:
+              memory: 0.5Gi
+              cpu: 0.1
+          volumeMounts:
+            - name: dataroot
+              mountPath: /usr/local/apache2/htdocs
+      volumes:
+        - name: dataroot
+          emptyDir: {}
