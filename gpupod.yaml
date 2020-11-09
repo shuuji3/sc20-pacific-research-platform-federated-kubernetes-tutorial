@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gpupod-shuuji3
+spec:
+  nodeSelector:
+    gpu-type: titan-xp
+  containers:
+    - name: mypod
+      image: nvidia/cuda:10.0-runtime-centos7
+      resources:
+        limits:
+          memory: 1.5Gi
+          cpu: 1
+          nvidia.com/gpu: 1
+        requests:
+          memory: 500Mi
+          cpu: 100m
+          nvidia.com/gpu: 1
+      command: ["sh", "-c", "sleep infinity"]
