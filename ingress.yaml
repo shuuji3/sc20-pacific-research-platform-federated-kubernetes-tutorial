@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: ''
+  name: ingress-shuuji3
+spec:
+  rules:
+    - host: shuuji3.nautilus.optiputer.net
+      http:
+        paths:
+          - backend:
+              serviceName: svc-shuuji3
+              servicePort: 80
+            path: /
