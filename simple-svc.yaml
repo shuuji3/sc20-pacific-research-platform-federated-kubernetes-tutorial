@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: svc-shuuji3
+  name: svc-shuuji3
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    k8s-app: http-shuuji3
+  type: ClusterIP
